@@ -2,35 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
+use App\Models\Seance;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\RoomResource;
-use App\Interfaces\RoomRepositoryInterface;
+use App\Http\Services\MovieService;
+use App\Http\Resources\SeanceResource;
 use App\Interfaces\CinemaRepositoryInterface;
-use App\Http\Requests\StoreOrUpdateRoomRequest;
+use App\Interfaces\SeanceRepositoryInterface;
+use App\Http\Requests\StoreOrUpdateSeanceRequest;
 use App\Classes\ApiResponseClass as ResponseClass;
 
 /**
- * @OA\Info(title="Rooms - API", version="1.0")
+ * @OA\Info(title="Seances - API", version="1.0")
  */ 
-class RoomController extends Controller
+class SeanceController extends Controller
 {
-    
-    private RoomRepositoryInterface $roomRepositoryInterface;
 
     private CinemaRepositoryInterface $cinemaRepositoryInterface;
+
+    private SeanceRepositoryInterface $seanceRepositoryInterface;
+
+    protected $movieService;
     
     public function __construct(
-        RoomRepositoryInterface $roomRepositoryInterface,
-        CinemaRepositoryInterface $cinemaRepositoryInterface
+        CinemaRepositoryInterface $cinemaRepositoryInterface,
+        SeanceRepositoryInterface $seanceRepositoryInterface,
+        MovieService $movieService
     )
     {
-        $this->roomRepositoryInterface = $roomRepositoryInterface;
         $this->cinemaRepositoryInterface = $cinemaRepositoryInterface;
+        $this->seanceRepositoryInterface = $seanceRepositoryInterface;
+        $this->movieService = $movieService;
     }
 
     /**
@@ -38,11 +43,11 @@ class RoomController extends Controller
     **/
     /**
      * @OA\Get(
-     *     path="/api/cinemas/{cinemaId}/rooms",
-     *     operationId="getRoomsListByCinema",
-     *     tags={"Rooms"},
-     *     summary="Gets the list of rooms by cinema",
-     *     description="Returns the list of rooms by cinema with optional pagination",
+     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}/seances",
+     *     operationId="getSeancesListByRoom",
+     *     tags={"Seances"},
+     *     summary="Gets the list of seances by room",
+     *     description="Returns the list of seances by room with optional pagination",
      *     @OA\Parameter(
      *         name="perPage",
      *         in="query",
@@ -63,6 +68,16 @@ class RoomController extends Controller
      *             format="uuid"
      *         )
      *     ),
+     *      @OA\Parameter(
+     *         name="roomId",
+     *         in="path",
+     *         description="ID of room to return seances",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -73,7 +88,7 @@ class RoomController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="No room(s) found"
+     *         description="No seance(s) found"
      *     ),
      *      @OA\Response(
      *         response=500,
@@ -81,7 +96,7 @@ class RoomController extends Controller
      *     )
      * )
      */
-    public function index($cinemaId, $perPage = 10)
+    public function index($cinemaId, $roomId, $perPage = 10)
     {
         $perPage = request()->query('perPage', $perPage);
 
@@ -89,14 +104,18 @@ class RoomController extends Controller
         if (!$cinema) {
             return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
         }
+        $room = $cinema->rooms->where('id', $roomId)->first();
+        if (!$room) {
+            return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
+        }
 
-        $data = $this->roomRepositoryInterface->index($cinemaId, $perPage);
+        $data = $this->seanceRepositoryInterface->index($roomId, $perPage);
 
         if ($data->isEmpty()) {
-            return ResponseClass::sendResponse([], 'No rooms found for this cinema : '.$cinemaId, 204);
+            return ResponseClass::sendResponse([], "No seance(s) found for this room : ".$roomId, 204);
         }
         
-        return ResponseClass::sendResponse(RoomResource::collection($data),'',200, true);
+        return ResponseClass::sendResponse(SeanceResource::collection($data),'',200, true);
     }
 
 
@@ -105,11 +124,11 @@ class RoomController extends Controller
      */
     /**
      * @OA\Post(
-     *     path="/api/cinemas/{cinemaId}/rooms",
-     *     operationId="storeRoomByCinema",
-     *     tags={"Rooms"},
-     *     summary="Store a new room by cinema",
-     *     description="Stores a new room by cinema and returns the room data",
+     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}/seances",
+     *     operationId="storeSeanceByRoom",
+     *     tags={"Seances"},
+     *     summary="Store a new seance by room",
+     *     description="Stores a new seance by room and returns the seance data",
      *     @OA\Parameter(
      *         name="cinemaId",
      *         in="path",
@@ -120,13 +139,23 @@ class RoomController extends Controller
      *             format="uuid"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="roomId",
+     *         in="path",
+     *         description="ID of room to store seance",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
+     *         )
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Room data",
+     *         description="Seance data",
      *         @OA\JsonContent(
-     *             required={"name", "seats"},
-     *             @OA\Property(property="name", type="string", example="A New Beginning"),
-     *             @OA\Property(property="seats", type="integer", example="10")
+     *             required={"movie_id", "start_date"},
+     *             @OA\Property(property="movie_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2021-09-15")
      *         ),
      *     ),
      *     @OA\Response(
@@ -135,11 +164,11 @@ class RoomController extends Controller
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="id", type="string", format="uuid", example="3434-4343-4343-4343"),
-     *             @OA\Property(property="name", type="string", example="A New Beginning"),
-     *             @OA\Property(property="seats", type="integer", example="10"),
-     *             @OA\Property(property="cinema_id", type="string", format="uuid", example="3434-4343-4343-4343"),
-    *              @OA\Property(property="created_at", type="string", format="date", example="2021-09-15"),
-    *              @OA\Property(property="updated_at", type="string", format="date", example="2021-09-15")
+     *             @OA\Property(property="movie_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2021-09-15"),
+     *             @OA\Property(property="room_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="created_at", type="string", format="date", example="2021-09-15"),
+     *             @OA\Property(property="updated_at", type="string", format="date", example="2021-09-15")
      *         ),
      *     ),
      *     @OA\Response(
@@ -152,7 +181,7 @@ class RoomController extends Controller
      *     )
      * )
      */
-    public function store(StoreOrUpdateRoomRequest $request, $cinemaId)
+    public function store(StoreOrUpdateSeanceRequest $request, $cinemaId, $roomId)
     {
         DB::beginTransaction();
         try{
@@ -161,17 +190,28 @@ class RoomController extends Controller
             if (!$cinema) {
                 return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
             }
+            $room = $cinema->rooms->where('id', $roomId)->first();
+            if (!$room) {
+                return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
+            }
+
+            $movieId = $request->input('movie_id');
+
+            $movie = $this->movieService->getById($movieId);
+            if(!$movie) {
+                return ResponseClass::sendResponse(null, "Movie not found with ID : ".$movieId, 404);
+            }
 
             $data = [
-                'name' => $request->input('name'),
-                'seats' => $request->input('seats'),
-                'cinema_id' => $cinemaId
+                'movie_id' => $request->input('movie_id'),
+                'start_date' => $request->input('start_date'),
+                'room_id' => $roomId
             ];
 
-            $room = $this->roomRepositoryInterface->store($data, $cinemaId);
+            $seance = $this->seanceRepositoryInterface->store($data, $roomId);
 
             DB::commit();
-            return ResponseClass::sendResponse(new RoomResource($room),'Room created successfully for cinema : '.$cinemaId,201);
+            return ResponseClass::sendResponse(new SeanceResource($seance),'Seance created successfully for room : '.$roomId,201);
 
         }catch(\Exception $ex){
             return ResponseClass::rollback($ex);
@@ -183,11 +223,11 @@ class RoomController extends Controller
      */
     /**
      * @OA\Get(
-     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}",
-     *     operationId="getRoomByIdByCinema",
-     *     tags={"Rooms"},
-     *     summary="Get room by ID by cinema",
-     *     description="Returns a single room by cinema",
+     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}/seances/{seanceId}",
+     *     operationId="getSeanceByIdByRoom",
+     *     tags={"Seances"},
+     *     summary="Get seance by ID by room",
+     *     description="Returns a single seance by room",
      *     @OA\Parameter(
      *         name="cinemaId",
      *         in="path",
@@ -208,22 +248,32 @@ class RoomController extends Controller
      *             format="uuid"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="seanceId",
+     *         in="path",
+     *         description="ID of seance to return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="id", type="string", format="uuid", example="3434-4343-4343-4343"),
-     *             @OA\Property(property="name", type="string", example="A New Beginning"),
-     *             @OA\Property(property="seats", type="integer", example="10"),
-     *             @OA\Property(property="cinema_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="movie_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2021-09-15"),
+     *             @OA\Property(property="room_id", type="string", format="uuid", example="3434-4343-4343-4343"),
      *             @OA\Property(property="created_at", type="string", format="date", example="2021-09-15"),
      *             @OA\Property(property="updated_at", type="string", format="date", example="2021-09-15")
      *         ),
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Room not found"
+     *         description="Seance not found"
      *     ),
      *     @OA\Response(
      *         response=500,
@@ -231,18 +281,22 @@ class RoomController extends Controller
      *     )
      * )
      */
-    public function show($cinemaId, $id)
+    public function show($cinemaId, $roomId, $id)
     {
         $cinema = $this->cinemaRepositoryInterface->getById($cinemaId);
         if (!$cinema) {
             return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
         }
-        $room = $cinema->rooms->where('id', $id)->first();
+        $room = $cinema->rooms->where('id', $roomId)->first();
         if (!$room) {
             return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
         }
+        $seance = $room->seances->where('id', $id)->first();
+        if (!$seance) {
+            return ResponseClass::sendResponse(null, "Seance not found for room : ".$roomId, 404);
+        }
 
-        return ResponseClass::sendResponse(new RoomResource($room),'',200);
+        return ResponseClass::sendResponse(new SeanceResource($seance),'',200);
     }
 
 
@@ -251,11 +305,11 @@ class RoomController extends Controller
      */
     /**
      * @OA\Put(
-     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}",
-     *     operationId="updateRoomByCinema",
-     *     tags={"Rooms"},
-     *     summary="Update an existing room by cinema",
-     *     description="Updates and returns a room by cinema data",
+     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}/seances/{seanceId}",
+     *     operationId="updateSeanceByRoom",
+     *     tags={"Seances"},
+     *     summary="Update an existing seance by room",
+     *     description="Updates and returns a seance by room data",
      *     @OA\Parameter(
      *         name="cinemaId",
      *         in="path",
@@ -276,24 +330,34 @@ class RoomController extends Controller
      *             format="uuid"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="seanceId",
+     *         in="path",
+     *         description="ID of seance that needs to be updated",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
+     *         )
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         description="Room data",
      *         @OA\JsonContent(
-     *             required={"name", "seats"},
-     *             @OA\Property(property="name", type="string", example="A New Beginning"),
-     *             @OA\Property(property="seats", type="integer", example="10")
+     *             required={"movie_id", "start_date"},
+     *             @OA\Property(property="movie_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2021-09-15")
      *         ),
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Room updated",
+     *         description="Seance updated",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="id", type="string", format="uuid", example="3434-4343-4343-4343"),
-     *             @OA\Property(property="name", type="string", example="A New Beginning"),
-     *             @OA\Property(property="seats", type="integer", example="10"),
-     *             @OA\Property(property="cinema_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="movie_id", type="string", format="uuid", example="3434-4343-4343-4343"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2021-09-15"),
+     *             @OA\Property(property="room_id", type="string", format="uuid", example="3434-4343-4343-4343"),
      *             @OA\Property(property="created_at", type="string", format="date", example="2021-09-15"),
      *             @OA\Property(property="updated_at", type="string", format="date", example="2021-09-15")
      *         )
@@ -304,7 +368,7 @@ class RoomController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Room not found"
+     *         description="Seance not found"
      *     ),
      *     @OA\Response(
      *         response=405,
@@ -316,7 +380,7 @@ class RoomController extends Controller
      *     )
      * )
      */
-    public function update(StoreOrUpdateRoomRequest $request, $cinemaId, $id)
+    public function update(StoreOrUpdateSeanceRequest $request, $cinemaId, $roomId, $id)
     {
         DB::beginTransaction();
         try{
@@ -324,22 +388,26 @@ class RoomController extends Controller
             if (!$cinema) {
                 return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
             }
-            $room = $cinema->rooms->where('id', $id)->first();
+            $room = $cinema->rooms->where('id', $roomId)->first();
             if (!$room) {
                 return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
             }
+            $seance = $room->seances->where('id', $id)->first();
+            if (!$seance) {
+                return ResponseClass::sendResponse(null, "Seance not found for room : ".$roomId, 404);
+            }
 
             $data = [
-                'name' => $request->input('name'),
-                'seats' => $request->input('seats'),
-                'cinema_id' => $cinemaId
+                'movie_id' => $request->input('movie_id'),
+                'start_date' => $request->input('start_date'),
+                'room_id' => $roomId
             ];
 
-            $updated = $this->roomRepositoryInterface->update($data, $cinemaId, $id);
+            $updated = $this->seanceRepositoryInterface->update($data, $roomId, $id);
 
             if ($updated) {
                 $responseCode = 200;
-                $responseMessage = 'Room updated successfully';
+                $responseMessage = 'Seance updated successfully';
             }  else {
                 $responseCode = 422;
                 $responseMessage = 'Unable to process the request';
@@ -357,11 +425,11 @@ class RoomController extends Controller
      */
     /**
      * @OA\Delete(
-     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}",
-     *     operationId="deleteRoomByCinema",
-     *     tags={"Rooms"},
-     *     summary="Delete a room by cinema",
-     *     description="Deletes a room by cinema and returns a success message",
+     *     path="/api/cinemas/{cinemaId}/rooms/{roomId}/seances/{seanceId}",
+     *     operationId="deleteSeanceByRoom",
+     *     tags={"Seances"},
+     *     summary="Delete a seance by room",
+     *     description="Deletes a seance by room and returns a success message",
      *     @OA\Parameter(
      *         name="cinemaId",
      *         in="path",
@@ -382,13 +450,23 @@ class RoomController extends Controller
      *             format="uuid"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="seanceId",
+     *         in="path",
+     *         description="ID of seance to delete",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="uuid"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Room deleted successfully"
+     *         description="Seance deleted successfully"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Room not found"
+     *         description="Seance not found"
      *     ),
      *     @OA\Response(
      *         response=500,
@@ -396,22 +474,26 @@ class RoomController extends Controller
      *     )
      * )
      */
-    public function destroy($cinemaId, $id)
+    public function destroy($cinemaId, $roomId, $id)
     {
         $cinema = $this->cinemaRepositoryInterface->getById($cinemaId);
         if (!$cinema) {
             return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
         }
-        $room = $cinema->rooms->where('id', $id)->first();
+        $room = $cinema->rooms->where('id', $roomId)->first();
         if (!$room) {
             return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
         }
+        $seance = $room->seances->where('id', $id)->first();
+        if (!$seance) {
+            return ResponseClass::sendResponse(null, "Seance not found for room : ".$roomId, 404);
+        }
         
-        $deleted = $this->roomRepositoryInterface->delete($cinemaId, $id);
+        $deleted = $this->seanceRepositoryInterface->delete($roomId, $id);
         if(!$deleted) {
-            return ResponseClass::sendResponse(null, 'Error deleting room', 500);
+            return ResponseClass::sendResponse(null, 'Error deleting seance', 500);
         }
 
-        return ResponseClass::sendResponse(null,'Room deleted successfully',204);
+        return ResponseClass::sendResponse(null,'Seance deleted successfully',204);
     }
 }

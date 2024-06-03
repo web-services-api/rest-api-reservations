@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Cinema;
-use App\Models\Seance;
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Room extends Model
+class Seance extends Model
 {
     use HasFactory, HasUuids;
 
@@ -17,19 +16,14 @@ class Room extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'name',
-        'seats',
-        'cinema_id'
+        'movie_id',
+        'room_id',
+        'start_date'
     ];
 
 
-    public function cinema()
+    public function room()
     {
-        return $this->belongsTo(Cinema::class);
-    }
-
-    public function seances()
-    {
-        return $this->hasMany(Seance::class);
+        return $this->belongsTo(Room::class);
     }
 }

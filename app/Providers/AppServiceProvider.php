@@ -2,14 +2,16 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\Resources\Json\JsonResource;
-
 use App\Repositories\RoomRepository;
-use App\Interfaces\RoomRepositoryInterface;
-
 use App\Repositories\CinemaRepository;
+
+use App\Repositories\SeanceRepository;
+use Illuminate\Support\ServiceProvider;
+
+use App\Interfaces\RoomRepositoryInterface;
 use App\Interfaces\CinemaRepositoryInterface;
+use App\Interfaces\SeanceRepositoryInterface;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(CinemaRepositoryInterface::class, CinemaRepository::class);
         $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
+        $this->app->bind(SeanceRepositoryInterface::class, SeanceRepository::class);
     }
 
     /**

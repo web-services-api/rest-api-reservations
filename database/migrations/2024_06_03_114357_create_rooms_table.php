@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 128)->nullable(false);
             $table->integer('seats')->nullable(false)->unsigned();
-            $table->foreignUuid('cinema_id');
+            $table->foreignUuid('cinema_id')->nullable(false);
             $table->timestamps();
 
             $table->foreign('cinema_id')->references('id')->on('cinemas');

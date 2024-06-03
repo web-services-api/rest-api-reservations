@@ -43,6 +43,7 @@ class ApiResponseClass
         } else {
             $response['message'] = self::$statusMessages[$code];
         }
+
         return response()->json($response, $code);
     }
 

@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('seances', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('movie_id')->nullable(false)->unsigned();
+            $table->foreignUuid('movie_id')->nullable(false);
+            $table->foreignUuid('room_id')->nullable(false);
             $table->date('start_date')->nullable(false);
             $table->timestamps();
 
             $table->foreign('movie_id')->references('id')->on('movies');
+            $table->foreign('room_id')->references('id')->on('rooms');
         });
     }
 

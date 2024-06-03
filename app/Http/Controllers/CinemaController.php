@@ -58,7 +58,7 @@ class CinemaController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="No cinema found"
+     *         description="No cinema(s) found"
      *     ),
      *      @OA\Response(
      *         response=500,
