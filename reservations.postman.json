@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "125befa5-70f2-47f9-8ccb-11f6b0b0bc11",
-		"name": "Movies",
+		"name": "Reservations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31731329"
 	},
