@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "125befa5-70f2-47f9-8ccb-11f6b0b0bc11",
+		"name": "Movies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31731329"
+	},
+	"item": [
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies/search?query=Grai",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Grai"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies/1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "teet",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "PAS OUF",
+									"type": "text"
+								},
+								{
+									"key": "release_date",
+									"value": "2023-01-01",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "media",
+									"type": "file",
+									"src": "/Users/qtn/Documents/Photos/QTN.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "name",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "release_date",
+									"value": "2001-03-03",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "media",
+									"type": "file",
+									"src": "/Users/qtn/Documents/Photos/Motif t-shirt.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies/101?_method=PUT",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies",
+								"101"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/movies/12",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movies",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories?page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories/search?query=sfdsfsf",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "sfdsfsf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories/1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "TEST",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "dddd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories/20",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/categories/1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Media",
+			"item": [
+				{
+					"name": "Medias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/medias?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"medias"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Media",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/medias/2",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"medias",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Media",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/medias/1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"medias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL_API",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8000/",
+			"type": "string"
+		}
+	]
+}
