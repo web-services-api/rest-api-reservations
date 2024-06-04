@@ -45,6 +45,19 @@ class MovieService {
         return $response;
     }
 
+    public function getAll($perPage) {
+        try {
+            $response = $this->client->request('GET', env('API_MOVIE_URL').'/movies?per_page='.$perPage);
+    
+            $response = json_decode($response->getBody()->getContents(), true);
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            throw new \Exception("Error while requesting: " . $e->getMessage());
+        }
+        
+        return $response['data'];
+    }
+
 }
 
 
