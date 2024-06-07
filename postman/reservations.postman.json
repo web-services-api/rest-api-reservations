@@ -1,0 +1,723 @@
+{
+	"info": {
+		"_postman_id": "16cdc4a6-5caa-4188-8afa-369a5f6e6b24",
+		"name": "Reservations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31731329"
+	},
+	"item": [
+		{
+			"name": "Cinema",
+			"item": [
+				{
+					"name": "Cinemas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/9c33158b-603e-4435-b034-0d7720db69ad",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"9c33158b-603e-4435-b034-0d7720db69ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "teet",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "name",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/9c3315ac-2585-49f1-bd63-df1b13a94f22?_method=PUT",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"9c3315ac-2585-49f1-bd63-df1b13a94f22"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/9c3315ac-2585-49f1-bd63-df1b13a94f22",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"9c3315ac-2585-49f1-bd63-df1b13a94f22"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/9c331ffa-0013-4eb2-8c6e-89b1dec6bf71",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"9c331ffa-0013-4eb2-8c6e-89b1dec6bf71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ROOOMMM",
+									"type": "text"
+								},
+								{
+									"key": "seats",
+									"value": "69",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "AAA",
+									"type": "text"
+								},
+								{
+									"key": "seats",
+									"value": "55",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/9c3338bd-1484-4322-8f17-0baf9ed3236c?_method=PUT",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"9c3338bd-1484-4322-8f17-0baf9ed3236c"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cinema",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/9c3338bd-1484-4322-8f17-0baf9ed3236c",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"9c3338bd-1484-4322-8f17-0baf9ed3236c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seance",
+			"item": [
+				{
+					"name": "Seance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/{{roomId}}/seances?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"{{roomId}}",
+								"seances"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/{{roomId}}/seances/{{seanceId}}",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"{{roomId}}",
+								"seances",
+								"{{seanceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "movie_id",
+									"value": "9c38866a-853f-496f-8103-140930c993e8",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2222-04-02",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/{{roomId}}/seances",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"{{roomId}}",
+								"seances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "movie_id",
+									"value": "9c32b3a4-1d4d-4fd3-9351-5f454181d03e",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2000-01-01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/{{roomId}}/seances/{{seanceId}}?_method=PUT",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"{{roomId}}",
+								"seances",
+								"{{seanceId}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seance",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/cinemas/{{cinemaId}}/rooms/{{roomId}}/seances/{{seanceId}}",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"cinemas",
+								"{{cinemaId}}",
+								"rooms",
+								"{{roomId}}",
+								"seances",
+								"{{seanceId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/movie/{{movieId}}/reservations?perPage=70&page=1",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movie",
+								"{{movieId}}",
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "perPage",
+									"value": "70"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicXVlbnRpbiIsInVzZXJJRCI6IjM0OWVhZGI1LTllMzAtNDg4NS05YWQ3LTNhODM2NmMzNTFjZSIsImlhdCI6MTcxNzc1ODE4MiwiZXhwIjoxNzE3NzYxNzgyfQ.rpXI4qLlqWzD1ewyvkry2BsM5j8wKByMxcVtLrfdYXA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/reservations/{{reservationId}}",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"reservations",
+								"{{reservationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "seat",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "seance_id",
+									"value": "9c385c9f-fec5-4395-9c06-4fe704fd70fa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/movie/{{movieId}}/reservations",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"movie",
+								"{{movieId}}",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "seat",
+									"value": "40",
+									"type": "text"
+								},
+								{
+									"key": "seance_id",
+									"value": "9c385c9f-fec5-4395-9c06-4fe704fd70fa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/reservations/{{reservationId}}?_method=PUT",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"reservations",
+								"{{reservationId}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL_API}}/reservations/{{reservationId}}",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"reservations",
+								"{{reservationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL_API}}/reservations/{{reservationId}}/confirm",
+							"host": [
+								"{{BASE_URL_API}}"
+							],
+							"path": [
+								"reservations",
+								"{{reservationId}}",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL_API",
+			"value": "http://127.0.0.1:8001/api",
+			"type": "string"
+		},
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8001",
+			"type": "string"
+		},
+		{
+			"key": "cinemaId",
+			"value": "9c38875e-7d40-4e0e-b9ea-eb26b1cd9929"
+		},
+		{
+			"key": "roomId",
+			"value": "9c38875e-85a9-400f-92b3-1a58e8674f21"
+		},
+		{
+			"key": "seanceId",
+			"value": "9c38875e-a074-4ac5-8168-bc3f273bba32",
+			"type": "string"
+		},
+		{
+			"key": "movieId",
+			"value": "9c3858bc-ec9e-443e-8d44-1bc3ea5715c6",
+			"type": "string"
+		},
+		{
+			"key": "reservationId",
+			"value": "9c3aade7-4ad7-4bbd-8175-e54e4db7e41a",
+			"type": "string"
+		}
+	]
+}

@@ -15,9 +15,6 @@ use App\Interfaces\SeanceRepositoryInterface;
 use App\Http\Requests\StoreOrUpdateSeanceRequest;
 use App\Classes\ApiResponseClass as ResponseClass;
 
-/**
- * @OA\Info(title="Seances - API", version="1.0")
- */ 
 class SeanceController extends Controller
 {
 
@@ -194,9 +191,8 @@ class SeanceController extends Controller
             if (!$room) {
                 return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
             }
-
+            
             $movieId = $request->input('movie_id');
-
             $movie = $this->movieService->getById($movieId);
             if(!$movie) {
                 return ResponseClass::sendResponse(null, "Movie not found with ID : ".$movieId, 404);
@@ -480,7 +476,7 @@ class SeanceController extends Controller
         if (!$cinema) {
             return ResponseClass::sendResponse(null, "Cinema not found for cinema : ".$cinemaId, 404);
         }
-        $room = $cinema->rooms->where('id', $roomId)->first();
+        $room = $cinema->rooms->where('id', $id)->first();
         if (!$room) {
             return ResponseClass::sendResponse(null, "Room not found for cinema : ".$cinemaId, 404);
         }

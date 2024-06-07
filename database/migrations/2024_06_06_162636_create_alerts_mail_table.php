@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservations', function (Blueprint $table) {
+        Schema::create('alerts_mail', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('rank')->nullable(false)->unsigned();
-            $table->enum('status', ['open', 'expired', 'confirmed'])->nullable(false);
-            $table->integer('seat')->nullable(false)->unsigned();
+            $table->string('email', 255)->nullable(false);
+            $table->string('type', 255)->nullable(false);
+            $table->unsignedInteger('user_id')->nullable(false);
+            $table->string('status', 255)->nullable(false)->default('pending');
+            $table->text('debug_message')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservations');
+        Schema::dropIfExists('alerts_mail');
     }
 };

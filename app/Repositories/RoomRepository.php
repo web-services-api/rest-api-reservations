@@ -14,7 +14,7 @@ class RoomRepository implements RoomRepositoryInterface
       return Room::where('cinema_id', $cinemaId)->find($id);
    }
 
-   public function store(array $data, $cinemaId){
+   public function store(array $data){
       return Room::create($data);
    }
 

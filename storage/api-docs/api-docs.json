@@ -1,707 +1,23 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Movies - API",
+        "title": "Reservations - API",
         "version": "1.0"
     },
     "paths": {
-        "/api/categories": {
+        "/api/cinemas": {
             "get": {
                 "tags": [
-                    "Categories"
+                    "Cinemas"
                 ],
-                "summary": "Get list of categories",
-                "description": "Returns list of categories with optional pagination",
-                "operationId": "getCategoriesList",
+                "summary": "Gets the list of cinemas",
+                "description": "Returns the list of cinemas with optional pagination",
+                "operationId": "getCinemasList",
                 "parameters": [
                     {
                         "name": "perPage",
                         "in": "query",
-                        "description": "Number of categories per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 10
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "No categories found"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Store a new category",
-                "description": "Stores a new category and returns the category data",
-                "operationId": "storeCategory",
-                "requestBody": {
-                    "description": "Category data",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "A new beginning"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "It's the story of a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 5
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A new beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 5
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Invalid input data"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/api/categories/search": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Search categories by name",
-                "description": "Returns a list of categories that match the search criteria",
-                "operationId": "searchCategories",
-                "parameters": [
-                    {
-                        "name": "query",
-                        "in": "query",
-                        "description": "Search query for category name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No categories found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/api/categories/{id}": {
-            "get": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Get category by ID",
-                "description": "Returns a single category",
-                "operationId": "getCategoryById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of category to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A new beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Category not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Update an existing category",
-                "description": "Updates and returns a category data",
-                "operationId": "updateCategory",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of category that needs to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "Category data",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "A new beginning"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "It's the story of a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 8
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Category updated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A new beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "Category not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Categories"
-                ],
-                "summary": "Delete a category",
-                "description": "Deletes a category and returns a success message",
-                "operationId": "deleteCategory",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of category to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Category deleted successfully"
-                    },
-                    "404": {
-                        "description": "Category not found"
-                    },
-                    "500": {
-                        "description": "Error deleting category"
-                    }
-                }
-            }
-        },
-        "/api/categoriesMovies": {
-            "get": {
-                "tags": [
-                    "CategoriesMovies"
-                ],
-                "summary": "Get list of categoriesMovies",
-                "description": "Returns list of categoriesMovies",
-                "operationId": "getCategoriesMoviesList",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "No categoriesMovies found"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "CategoriesMovies"
-                ],
-                "summary": "Store a new categoryMovie",
-                "description": "Stores a new categoryMovie and returns the categoryMovie data",
-                "operationId": "storeCategoryMovie",
-                "requestBody": {
-                    "description": "CategoryMovie data",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "A New Beginning"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "It's the story of a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 5
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A New Beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 5
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Invalid input data"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/api/categoriesMovies/{id}": {
-            "get": {
-                "tags": [
-                    "CategoriesMovies"
-                ],
-                "summary": "Get categoryMovie by ID",
-                "description": "Returns a single categoryMovie",
-                "operationId": "getCategoryMovieById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of categoryMovie to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A New Beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "CategoryMovie not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "CategoriesMovies"
-                ],
-                "summary": "Update an existing categoryMovie",
-                "description": "Updates and returns a categoryMovie data",
-                "operationId": "updateCategoryMovie",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of categoryMovie that needs to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "CategoryMovie data",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "A New Beginning"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "It's the story of a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 8
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "CategoryMovie updated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A New Beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's the story of a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2021-09-15"
-                                        },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid ID supplied"
-                    },
-                    "404": {
-                        "description": "CategoryMovie not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "CategoriesMovies"
-                ],
-                "summary": "Delete a categoryMovie",
-                "description": "Deletes a categoryMovie and returns a success message",
-                "operationId": "deleteCategoryMovie",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of categoryMovie to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "CategoryMovie deleted successfully"
-                    },
-                    "404": {
-                        "description": "CategoryMovie not found"
-                    },
-                    "500": {
-                        "description": "Error deleting categoryMovie"
-                    }
-                }
-            }
-        },
-        "/api/medias": {
-            "get": {
-                "tags": [
-                    "Media"
-                ],
-                "summary": "Gets the list of media",
-                "description": "Returns the list of media with optional pagination",
-                "operationId": "getMediaList",
-                "parameters": [
-                    {
-                        "name": "perPage",
-                        "in": "query",
-                        "description": "Number of medias per page",
+                        "description": "Number of cinemas per page",
                         "required": false,
                         "schema": {
                             "type": "integer",
@@ -724,223 +40,65 @@
                         }
                     },
                     "404": {
-                        "description": "No medias found"
+                        "description": "No cinema(s) found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
-            }
-        },
-        "/api/medias/{id}": {
-            "get": {
+            },
+            "post": {
                 "tags": [
-                    "Media"
+                    "Cinemas"
                 ],
-                "summary": "Get media by ID",
-                "description": "Returns a single media",
-                "operationId": "getMediaById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of media to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                "summary": "Store a new cinema",
+                "description": "Stores a new cinema and returns the cinema data",
+                "operationId": "storeCinema",
+                "requestBody": {
+                    "description": "Cinema data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "A New Beginning"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "media_path": {
                                             "type": "string",
-                                            "example": "/path/to/media"
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
                                         },
-                                        "media_url": {
+                                        "name": {
                                             "type": "string",
-                                            "example": "http://example.com/media"
-                                        },
-                                        "media_type": {
-                                            "type": "string",
-                                            "example": "image"
+                                            "example": "A New Beginning"
                                         },
                                         "created_at": {
                                             "type": "string",
-                                            "format": "date-time",
-                                            "example": "2021-09-15T00:00:00Z"
-                                        },
-                                        "updated_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2021-09-15T00:00:00Z"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Media not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Media"
-                ],
-                "summary": "Delete a media",
-                "description": "Deletes a media and returns a success message",
-                "operationId": "deleteMedia",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of media to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Media deleted successfully"
-                    },
-                    "404": {
-                        "description": "Media not found"
-                    },
-                    "500": {
-                        "description": "Error deleting media"
-                    }
-                }
-            }
-        },
-        "/api/movies": {
-            "get": {
-                "tags": [
-                    "Movies"
-                ],
-                "summary": "Gets the list of movies",
-                "description": "Returns the list of movies with optional pagination",
-                "operationId": "getMoviesList",
-                "parameters": [
-                    {
-                        "name": "perPage",
-                        "in": "query",
-                        "description": "Number of movies per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 10
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "No movies found"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Movies"
-                ],
-                "summary": "Store a new movie",
-                "description": "Stores a new movie and returns the movie data",
-                "operationId": "storeMovie",
-                "requestBody": {
-                    "description": "Movie data",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "A New Beginning"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "It's a story about a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 5
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "A New Beginning"
-                                        },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's a story about a new beginning..."
-                                        },
-                                        "release_date": {
-                                            "type": "string",
                                             "format": "date",
                                             "example": "2021-09-15"
                                         },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 5
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
                                         }
                                     },
                                     "type": "object"
@@ -957,22 +115,217 @@
                 }
             }
         },
-        "/api/movies/search": {
+        "/api/cinemas/{id}": {
             "get": {
                 "tags": [
-                    "Movies"
+                    "Cinemas"
                 ],
-                "summary": "Search movies by name or description",
-                "description": "Returns a list of movies that match the search criteria",
-                "operationId": "searchMovies",
+                "summary": "Get cinema by ID",
+                "description": "Returns a single cinema",
+                "operationId": "getCinemaById",
                 "parameters": [
                     {
-                        "name": "query",
-                        "in": "query",
-                        "description": "Search query for movie name or description",
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of cinema to return",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "A New Beginning"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cinema not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cinemas"
+                ],
+                "summary": "Update an existing cinema",
+                "description": "Updates and returns a cinema data",
+                "operationId": "updateCinema",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of cinema that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Cinema data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "A New Beginning"
+                                    },
+                                    "created_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2021-09-15"
+                                    },
+                                    "updated_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2021-09-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cinema updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "A New Beginning"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Cinema not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cinemas"
+                ],
+                "summary": "Delete a cinema",
+                "description": "Deletes a cinema and returns a success message",
+                "operationId": "deleteCinema",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of cinema to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Cinema deleted successfully"
+                    },
+                    "404": {
+                        "description": "Cinema not found"
+                    },
+                    "500": {
+                        "description": "Error deleting movie"
+                    }
+                }
+            }
+        },
+        "/api/movie/{movieId}/reservations": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Gets the list of reservations by movie",
+                "description": "Returns the list of reservations by movie with optional pagination",
+                "operationId": "getReservationsListByMovie",
+                "parameters": [
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Number of cinemas per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "ID of movie to return reservations",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -991,7 +344,109 @@
                         }
                     },
                     "404": {
-                        "description": "No movies found"
+                        "description": "No reservations found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Store a new reservation by movie",
+                "description": "Stores a new reservation by movie and returns the reservation data",
+                "operationId": "storeReservationByMovie",
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "path",
+                        "description": "ID of cinema to store room",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Reservation data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "seance_id",
+                                    "seat"
+                                ],
+                                "properties": {
+                                    "seance_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "3434-4343-4343-4343"
+                                    },
+                                    "seat": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2021-09-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seance_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seat": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "34"
+                                        },
+                                        "rank": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "3"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "open"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input data"
                     },
                     "500": {
                         "description": "Internal server error"
@@ -999,23 +454,23 @@
                 }
             }
         },
-        "/api/movies/{id}": {
+        "/api/reservations/{reservationId}": {
             "get": {
                 "tags": [
-                    "Movies"
+                    "Reservations"
                 ],
-                "summary": "Get movie by ID",
-                "description": "Returns a single movie",
-                "operationId": "getMovieById",
+                "summary": "Get reservation by ID",
+                "description": "Returns a single reservation",
+                "operationId": "getReservationById",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "reservationId",
                         "in": "path",
-                        "description": "ID of movie to return",
+                        "description": "ID of reservation to return",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -1027,27 +482,39 @@
                                 "schema": {
                                     "properties": {
                                         "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seance_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seat": {
                                             "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
+                                            "format": "int",
+                                            "example": "34"
                                         },
-                                        "name": {
+                                        "rank": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "3"
+                                        },
+                                        "status": {
                                             "type": "string",
-                                            "example": "A New Beginning"
+                                            "format": "string",
+                                            "example": "open"
                                         },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's a story about a new beginning..."
-                                        },
-                                        "release_date": {
+                                        "created_at": {
                                             "type": "string",
                                             "format": "date",
                                             "example": "2021-09-15"
                                         },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
                                         }
                                     },
                                     "type": "object"
@@ -1056,7 +523,7 @@
                         }
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Reservation not found"
                     },
                     "500": {
                         "description": "Internal server error"
@@ -1065,53 +532,55 @@
             },
             "put": {
                 "tags": [
-                    "Movies"
+                    "Reservations"
                 ],
-                "summary": "Update an existing movie",
-                "description": "Updates and returns a movie data",
-                "operationId": "updateMovie",
+                "summary": "Update an existing reservation",
+                "description": "Updates and returns a reservation data",
+                "operationId": "updateReservation",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "reservationId",
                         "in": "path",
-                        "description": "ID of movie that needs to be updated",
+                        "description": "ID of reservation that needs to be updated",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
                 "requestBody": {
-                    "description": "Movie data",
+                    "description": "Reservation data",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name",
-                                    "description",
-                                    "release_date",
-                                    "rating"
+                                    "seance_id",
+                                    "seat",
+                                    "rank",
+                                    "status"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "seance_id": {
                                         "type": "string",
-                                        "example": "A New Beginning"
+                                        "format": "uuid",
+                                        "example": "3434-4343-4343-4343"
                                     },
-                                    "description": {
+                                    "seat": {
+                                        "type": "integer",
+                                        "format": "int",
+                                        "example": "34"
+                                    },
+                                    "rank": {
+                                        "type": "integer",
+                                        "format": "int",
+                                        "example": "3"
+                                    },
+                                    "status": {
                                         "type": "string",
-                                        "example": "It's a story about a new beginning..."
-                                    },
-                                    "release_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2021-09-15"
-                                    },
-                                    "rating": {
-                                        "type": "number",
-                                        "format": "float",
-                                        "example": 8
+                                        "format": "string",
+                                        "example": "open"
                                     }
                                 },
                                 "type": "object"
@@ -1121,33 +590,45 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Movie updated",
+                        "description": "Reservation updated",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seance_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seat": {
                                             "type": "integer",
-                                            "format": "int64",
-                                            "example": 1
+                                            "format": "int",
+                                            "example": "34"
                                         },
-                                        "name": {
+                                        "rank": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "3"
+                                        },
+                                        "status": {
                                             "type": "string",
-                                            "example": "A New Beginning"
+                                            "format": "string",
+                                            "example": "open"
                                         },
-                                        "description": {
-                                            "type": "string",
-                                            "example": "It's a story about a new beginning..."
-                                        },
-                                        "release_date": {
+                                        "created_at": {
                                             "type": "string",
                                             "format": "date",
                                             "example": "2021-09-15"
                                         },
-                                        "rating": {
-                                            "type": "number",
-                                            "format": "float",
-                                            "example": 8
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
                                         }
                                     },
                                     "type": "object"
@@ -1159,41 +640,939 @@
                         "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Reservation not found"
                     },
                     "405": {
                         "description": "Validation exception"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
             "delete": {
                 "tags": [
-                    "Movies"
+                    "Reservations"
                 ],
-                "summary": "Delete a movie",
-                "description": "Deletes a movie and returns a success message",
-                "operationId": "deleteMovie",
+                "summary": "Delete a reservation",
+                "description": "Deletes a reservation and returns a success message",
+                "operationId": "deleteReservationById",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "reservationId",
                         "in": "path",
-                        "description": "ID of movie to delete",
+                        "description": "ID of reservation to delete",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "Movie deleted successfully"
+                        "description": "Reservation deleted successfully"
                     },
                     "404": {
-                        "description": "Movie not found"
+                        "description": "Reservation not found"
                     },
                     "500": {
-                        "description": "Error deleting movie"
+                        "description": "Error deleting room"
+                    }
+                }
+            }
+        },
+        "/api/reservations/{reservationId}/confirm": {
+            "put": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Confirm an existing reservation",
+                "description": "Confirms and returns a reservation data",
+                "operationId": "confirmReservation",
+                "parameters": [
+                    {
+                        "name": "reservationId",
+                        "in": "path",
+                        "description": "ID of reservation that needs to be confirmed",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservation confirmed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seance_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "seat": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "34"
+                                        },
+                                        "rank": {
+                                            "type": "integer",
+                                            "format": "int",
+                                            "example": "3"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "open"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/cinemas/{cinemaId}/rooms": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Gets the list of rooms by cinema",
+                "description": "Returns the list of rooms by cinema with optional pagination",
+                "operationId": "getRoomsListByCinema",
+                "parameters": [
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Number of cinemas per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to return rooms",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No room(s) found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Store a new room by cinema",
+                "description": "Stores a new room by cinema and returns the room data",
+                "operationId": "storeRoomByCinema",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to store room",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Room data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "seats"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "A New Beginning"
+                                    },
+                                    "seats": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "A New Beginning"
+                                        },
+                                        "seats": {
+                                            "type": "integer",
+                                            "example": "10"
+                                        },
+                                        "cinema_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/cinemas/{cinemaId}/rooms/{roomId}": {
+            "get": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Get room by ID by cinema",
+                "description": "Returns a single room by cinema",
+                "operationId": "getRoomByIdByCinema",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "A New Beginning"
+                                        },
+                                        "seats": {
+                                            "type": "integer",
+                                            "example": "10"
+                                        },
+                                        "cinema_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Room not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Update an existing room by cinema",
+                "description": "Updates and returns a room by cinema data",
+                "operationId": "updateRoomByCinema",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema room that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Room data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "seats"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "A New Beginning"
+                                    },
+                                    "seats": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Room updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "A New Beginning"
+                                        },
+                                        "seats": {
+                                            "type": "integer",
+                                            "example": "10"
+                                        },
+                                        "cinema_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Room not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "Delete a room by cinema",
+                "description": "Deletes a room by cinema and returns a success message",
+                "operationId": "deleteRoomByCinema",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to delete room",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Room deleted successfully"
+                    },
+                    "404": {
+                        "description": "Room not found"
+                    },
+                    "500": {
+                        "description": "Error deleting room"
+                    }
+                }
+            }
+        },
+        "/api/cinemas/{cinemaId}/rooms/{roomId}/seances": {
+            "get": {
+                "tags": [
+                    "Seances"
+                ],
+                "summary": "Gets the list of seances by room",
+                "description": "Returns the list of seances by room with optional pagination",
+                "operationId": "getSeancesListByRoom",
+                "parameters": [
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Number of cinemas per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to return rooms",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to return seances",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No seance(s) found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Seances"
+                ],
+                "summary": "Store a new seance by room",
+                "description": "Stores a new seance by room and returns the seance data",
+                "operationId": "storeSeanceByRoom",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to store room",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to store seance",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Seance data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "movie_id",
+                                    "start_date"
+                                ],
+                                "properties": {
+                                    "movie_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "3434-4343-4343-4343"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2021-09-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "movie_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "start_date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "room_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/cinemas/{cinemaId}/rooms/{roomId}/seances/{seanceId}": {
+            "get": {
+                "tags": [
+                    "Seances"
+                ],
+                "summary": "Get seance by ID by room",
+                "description": "Returns a single seance by room",
+                "operationId": "getSeanceByIdByRoom",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "seanceId",
+                        "in": "path",
+                        "description": "ID of seance to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "movie_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "start_date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "room_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Seance not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Seances"
+                ],
+                "summary": "Update an existing seance by room",
+                "description": "Updates and returns a seance by room data",
+                "operationId": "updateSeanceByRoom",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema room that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "seanceId",
+                        "in": "path",
+                        "description": "ID of seance that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Room data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "movie_id",
+                                    "start_date"
+                                ],
+                                "properties": {
+                                    "movie_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "3434-4343-4343-4343"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2021-09-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Seance updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "movie_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "start_date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "room_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "3434-4343-4343-4343"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2021-09-15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Seance not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Seances"
+                ],
+                "summary": "Delete a seance by room",
+                "description": "Deletes a seance by room and returns a success message",
+                "operationId": "deleteSeanceByRoom",
+                "parameters": [
+                    {
+                        "name": "cinemaId",
+                        "in": "path",
+                        "description": "ID of cinema to delete room",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "roomId",
+                        "in": "path",
+                        "description": "ID of room to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "seanceId",
+                        "in": "path",
+                        "description": "ID of seance to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Seance deleted successfully"
+                    },
+                    "404": {
+                        "description": "Seance not found"
+                    },
+                    "500": {
+                        "description": "Error deleting room"
                     }
                 }
             }

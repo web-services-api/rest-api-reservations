@@ -10,11 +10,14 @@ class SeanceRepository implements SeanceRepositoryInterface
       return Seance::where('room_id', $roomId)->orderBy('id', 'asc')->paginate($perPage);
    }
 
-   public function getById($roomId, $id){
-      return Seance::where('room_id', $roomId)->find($id);
+   public function getById(?string $roomId, string $id){
+      if($roomId){
+         return Seance::where('room_id', $roomId)->find($id);
+      }
+      return Seance::find($id);
    }
 
-   public function store(array $data, $roomId){
+   public function store(array $data){
       return Seance::create($data);
    }
 

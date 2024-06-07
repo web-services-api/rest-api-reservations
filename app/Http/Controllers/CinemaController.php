@@ -13,9 +13,6 @@ use App\Http\Requests\StoreOrUpdateCinemaRequest;
 use App\Interfaces\CinemaRepositoryInterface;
 use App\Classes\ApiResponseClass as ResponseClass;
 
-/**
- * @OA\Info(title="Cinemas - API", version="1.0")
- */ 
 class CinemaController extends Controller
 {
     

@@ -24,7 +24,8 @@ class MovieService {
                 return false;
             }
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            throw new \Exception("Error while requesting: " . $e->getMessage());
+            // throw new \Exception("Error while requesting: " . $e->getMessage());
+            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
         }
 
         return true;
@@ -39,10 +40,11 @@ class MovieService {
             $response = json_decode($response->getBody()->getContents(), true);
             
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            throw new \Exception("Error while requesting: " . $e->getMessage());
+            // throw new \Exception("Error while requesting: " . $e->getMessage());
+            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
         }
         
-        return $response;
+        return $response['data'];
     }
 
     public function getAll($perPage) {
@@ -52,7 +54,8 @@ class MovieService {
             $response = json_decode($response->getBody()->getContents(), true);
             
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            throw new \Exception("Error while requesting: " . $e->getMessage());
+            // throw new \Exception("Error while requesting: " . $e->getMessage());
+            $response = json_decode($e->getResponse()->getBody()->getContents(), true);
         }
         
         return $response['data'];

@@ -14,9 +14,6 @@ use App\Interfaces\CinemaRepositoryInterface;
 use App\Http\Requests\StoreOrUpdateRoomRequest;
 use App\Classes\ApiResponseClass as ResponseClass;
 
-/**
- * @OA\Info(title="Rooms - API", version="1.0")
- */ 
 class RoomController extends Controller
 {
     
