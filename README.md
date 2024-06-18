@@ -20,7 +20,6 @@ To start using this API, please follow the instructions below.
 2. Run `composer install` and `npm i` to install the dependencies.
 3. Copy `.env.example` to `.env` and configure your database.
 4. Run `php artisan key:generate` to generate the application key.
-5. Run `docker compose up` to start the database.
 6. Run `php artisan migrate:refresh --seed` to create the database tables and seed fake data.
 7. Run `php artisan serve` to start the development server.
 
